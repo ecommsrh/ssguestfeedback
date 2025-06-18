@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seasense Boutique Hotel - Guest Satisfaction Survey</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: url('https://i.imgur.com/NGgTehk.jpeg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .logo {
+  position: absolute; /* Position it in the top-left corner */
+  top: 10px; /* Adjust vertical spacing */
+  left: 10px; /* Adjust horizontal spacing */
+  width: 150px; /* Increase the size slightly */
+  height: auto; /* Maintain aspect ratio */
+}
+
+    h2 {
+      text-align: center;
+      color: white;
+    }
+
+ form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label, input {
+  display: block; /* Ensure elements are block-level */
+  width: 80%; /* Adjust width of the fields */
+  margin: 10px auto; /* Center elements horizontally */
+  text-align: left; /* Keep label text aligned to the left */
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 30px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+textarea {
+  display: block; /* Block-level to allow centering */
+  width: 80%; /* Match the width of name and email fields */
+  margin: 10px auto; /* Center horizontally */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box; /* Include padding in the width */
+  resize: vertical; /* Allow vertical resizing only */
+}
+
+
+   .star-rating {
+      display: flex;
+      justify-content: space-between;
+      font-size: 28px;
+      padding: 10px 0;
+      margin: auto;
+      max-width: 100%;
+    }
+
+    .star-rating span {
+      cursor: pointer;
+      color: #ccc;
+      transition: color 0.2s;
+    }
+
+    .rating-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: grey;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .trip-block, .feedback-block {
+      background-color: #f9f9f9;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      border-left: 5px solid #4caf50;
+    }
+
+    #tripadvisor-block {
+      text-align: center;
+    }
+
+    .trip-block img {
+      max-width: 150px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .star-rating {
+        font-size: 24px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .rating-labels {
+        font-size: 11px;
+        flex-direction: row;
+      }
+    }
+
+    .intro-text {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .intro-text b {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+      font-size: 14px;
+      margin-top: -5px;
+      margin-bottom: 10px;
+    }
+
+    .required-star {
+      color: red;
+    }
+
+    button {
+      display: block;
+      margin: 30px auto 0;
+      padding: 10px 30px;
+      font-size: 16px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    .red { color: red !important; }
+    .yellow { color: goldenrod !important; }
+    .green { color: green !important; }
+
+
+.touchpoint-stars {
+  margin-top: 5px;
+}
+
+    /* Modal styles */
+    #thankYouModal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .modal-content h3 {
+      margin-bottom: 10px;
+    }
+
+    .close-btn {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background-color: #005fa3;
+    }
+  
+.touchpoint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.touchpoint label {
+  flex: 1;
+  margin: 0;
+  text-align: left;
+}
+
+.touchpoint-stars {
+  flex-shrink: 0;
+  display: flex;
+  gap: 5px;
+  font-size: 22px;
+  cursor: pointer;
+}
+.touchpoint-stars span {
+  color: #ccc;
+}
+.touchpoint-stars span.selected {
+  color: #f4b400;
+}
+</style>
+</head>
+
+<body>
+
+  <h2>Seasense Boutique Hotel - Guest Satisfaction Survey</h2>
+
+<form id="survey-form">
+
+    <div class="intro-text">
+       <b>Thank you for choosing Seasense Boutique Hotel</b>
+    <br />
+    We’re always striving for excellence and would greatly value your feedback to further enhance our services.
+    <br /><hr />
+  </div>
+
+   <label for="name"><b>Name</b></label>
+  <input type="text" id="name" name="name" placeholder="Enter your name" />
+
+    <label for="email"><b>Email Address <span class="required-star">*</span></b></label>
+<input type="text" id="email" name="email" required placeholder="Enter your email address"/>
+<div id="email-error" class="error hidden">Oops! That doesn't look like a valid email. Please check and try again.</div>
+
+ <label for="rating"><b>How would you rate your overall experience during your stay with us? <span class="required-star">*</span></b></label>
+  <div id="star-rating" class="star-rating">
+    <span data-value="1">★</span>
+    <span data-value="2">★</span>
+    <span data-value="3">★</span>
+    <span data-value="4">★</span>
+    <span data-value="5">★</span>
+    <span data-value="6">★</span>
+    <span data-value="7">★</span>
+    <span data-value="8">★</span>
+    <span data-value="9">★</span>
+    <span data-value="10">★</span>
+ </div>
+<div id="rating-error" class="error hidden">Please rate your overall experience before proceeding.</div>
+  <input type="hidden" id="rating" name="rating" />
+
+    <div id="tripadvisor-block" class="trip-block hidden">
+    <p><b>We're thrilled you had an excellent stay!</b><br><br>
+    Would you consider leaving a quick review on TripAdvisor?<br>
+    It truly helps other guests discover us.</p>
+    <a href="https://www.tripadvisor.com/UserReview-g298342-d13821279-Seasense_Boutique_Hotel_Spa-Belle_Mare.html" target="_blank">
+      <img src="https://i.imgur.com/8h97sUF.jpeg" alt="TripAdvisor Logo">
+    </a>
+  </div>
+
+<div id="feedback-block" class="feedback-block hidden">
+
+<div id="touchpoint-section" style="text-align: center;">
+    <p><b>We’re sorry that we did not live up to your expectations. <br> Please rate the following aspects of your stay:</b></p><br>
+    <div class="touchpoint">
+      <label>Reservation</label>
+      <div class="touchpoint-stars" data-name="reservation"></div>
+    </div>
+    <div class="touchpoint">
+      <label>Check-in</label>
+      <div class="touchpoint-stars" data-name="checkin"></div>
+    </div>
+    <div class="touchpoint">
+      <label>Service</label>
+      <div class="touchpoint-stars" data-name="service"></div>
+    </div>
+    <div class="touchpoint">
+      <label>Room</label>
+      <div class="touchpoint-stars" data-name="room"></div>
+    </div>
+    <div class="touchpoint">
+      <label>Food & Beverage</label>
+      <div class="touchpoint-stars" data-name="fnb"></div>
+    </div>
+    <div class="touchpoint">
+      <label>Checkout</label>
+      <div class="touchpoint-stars" data-name="checkout"></div>
+    </div>
+  </div>
+<br>
+<label><b>Is there anything we could have done to make your stay better?</b></label>
+  <textarea id="feedback" name="feedback" rows="4" placeholder="Share your thoughts here..."></textarea>
+  <div id="touchpoint-error" class="error hidden">It is important for us to know where to improve. Please rate all the categories above.</div>
+</div>
+
+
+  <input type="hidden" name="touchpoint_reservation" id="touchpoint_reservation" />
+  <input type="hidden" name="touchpoint_checkin" id="touchpoint_checkin" />
+  <input type="hidden" name="touchpoint_service" id="touchpoint_service" />
+  <input type="hidden" name="touchpoint_room" id="touchpoint_room" />
+  <input type="hidden" name="touchpoint_fnb" id="touchpoint_fnb" />
+  <input type="hidden" name="touchpoint_checkout" id="touchpoint_checkout" />
+
+<button type="submit">Submit</button>
+</form>
+
+<!-- Modal -->
+  <div id="thankYouModal">
+    <div class="modal-content">
+      <h3>Thank you for your feedback!</h3>
+      <p>We truly appreciate you taking the time to share your thoughts.</p>
+      <a href="https://searesortshotels.com/" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:20px; padding:10px 20px; background:#0077cc; color:#fff; border-radius:6px; text-decoration:none;">
+  Explore more of our stunning hotels
+</a>
+
+      <br>
+      <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+<script>
+// Elements
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('survey-form');
+  const emailInput = document.getElementById('email');
+  const emailError = document.getElementById('email-error');
+  const ratingError = document.getElementById('rating-error');
+  const touchpointError = document.getElementById('touchpoint-error');
+  const feedbackBlock = document.getElementById('feedback-block');
+  const tripBlock = document.getElementById('tripadvisor-block');
+  const stars = document.querySelectorAll('.star-rating span');
+  const ratingInput = document.getElementById('rating');
+  const touchpointMap = ['reservation', 'checkin', 'service', 'room', 'fnb', 'checkout'];
+  const touchpointRatings = {};
+
+  let selectedRating = null;
+
+  // Clear all star classes
+  function clearStarClasses() {
+    stars.forEach(star => star.classList.remove('selected', 'hover', 'red', 'yellow', 'green'));
+  }
+
+  // Highlight stars based on rating value
+  function highlightStars(value) {
+    const colorClass = value <= 5 ? 'red' : value <= 7 ? 'yellow' : 'green';
+    stars.forEach(star => {
+      if (parseInt(star.dataset.value) <= value) {
+        star.classList.add(colorClass, 'hover');
+      }
+    });
+  }
+
+  // Set up star rating interaction
+  stars.forEach(star => {
+    star.addEventListener('mouseover', () => {
+      if (!selectedRating) {
+        highlightStars(parseInt(star.dataset.value));
+      }
+    });
+
+    star.addEventListener('mouseout', () => {
+      if (!selectedRating) {
+        clearStarClasses();
+      }
+    });
+
+    star.addEventListener('click', () => {
+      selectedRating = parseInt(star.dataset.value);
+      ratingInput.value = selectedRating;
+      clearStarClasses();
+      highlightStars(selectedRating);
+      ratingError.classList.add('hidden');
+      updateConditionalLogic(selectedRating);
+    });
+  });
+
+  // Update feedback and TripAdvisor sections based on rating
+  function updateConditionalLogic(value) {
+    if (value >= 8) {
+      tripBlock.classList.remove('hidden');
+      feedbackBlock.classList.add('hidden');
+    } else {
+      tripBlock.classList.add('hidden');
+      feedbackBlock.classList.remove('hidden');
+      renderTouchpoints();
+    }
+  }
+
+  // Render touchpoint stars for feedback
+  function renderTouchpoints() {
+    touchpointMap.forEach(name => {
+      const container = document.querySelector(`.touchpoint-stars[data-name="${name}"]`);
+      const hiddenInput = document.getElementById(`touchpoint_${name}`);
+      if (container) {
+        container.innerHTML = '';
+        for (let i = 1; i <= 5; i++) {
+          const star = document.createElement('span');
+          star.textContent = '★';
+          star.dataset.value = i;
+          star.addEventListener('click', () => {
+            touchpointRatings[name] = i;
+            hiddenInput.value = i;
+            [...container.children].forEach((s, index) => {
+              s.classList.toggle('selected', index < i);
+            });
+            touchpointError.classList.add('hidden');
+          });
+          container.appendChild(star);
+        }
+      }
+    });
+  }
+
+  // Hide email error message when typing
+  emailInput.addEventListener('input', () => {
+    emailError.classList.add('hidden');
+  });
+
+  // Form submission logic
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Email validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(emailInput.value)) {
+      emailError.classList.remove('hidden');
+      return;
+    } else {
+      emailError.classList.add('hidden');
+    }
+
+    // Star rating validation
+    if (!ratingInput.value) {
+      ratingError.classList.remove('hidden');
+      return;
+    } else {
+      ratingError.classList.add('hidden');
+    }
+
+    // Touchpoint validation
+    if (!feedbackBlock.classList.contains('hidden')) {
+      const allRated = touchpointMap.every(name => touchpointRatings[name]);
+      if (!allRated) {
+        touchpointError.classList.remove('hidden');
+        return;
+      } else {
+        touchpointError.classList.add('hidden');
+      }
+    }
+
+    // Submit form if all validations pass
+  emailjs.sendForm('service_b6edvwf', 'template_9sk8p4c', form)
+  .then(() => {
+    document.getElementById('thankYouModal').style.display = 'block';
+    form.reset();
+    selectedRating = null;
+    clearStarClasses();
+    // Reset touchpoints display if needed
+    document.querySelectorAll('.touchpoint-stars span.selected').forEach(star => star.classList.remove('selected'));
+  })
+  .catch(error => {
+    alert("Oops! Something went wrong. Please try again later.");
+    console.error('EmailJS error:', error);
+  });
+
+  });
+});
+function closeModal() {
+  document.getElementById('thankYouModal').style.display = 'none';
+location.reload();
+}
+
+     </script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+  emailjs.init("Q1rEEoPnDwzIlIg1I"); // Your public key
+</script>
+</body>
+</html>
