@@ -495,11 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearStarClasses();
     // Reset touchpoints display if needed
     document.querySelectorAll('.touchpoint-stars span.selected').forEach(star => star.classList.remove('selected'));
-  })
-  .catch(error => {
-    alert("Oops! Something went wrong. Please try again later.");
-    console.error('EmailJS error:', error);
-  });
+ });
 
   });
 });
