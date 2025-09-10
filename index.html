@@ -487,9 +487,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Submit form if all validations pass
-  emailjs.sendForm('service_b6edvwf', 'template_ml62wzs', form)
+ emailjs.sendForm('service_b6edvwf', 'template_ml62wzs', form)
   .then(() => {
-    document.getElementById('thankYouModal').style.display = 'block';
+    const ratingValue = parseInt(ratingInput.value);
+
+    if (ratingValue >= 8) {
+      // Redirect happy guests straight to TripAdvisor
+      window.location.href = "https://www.tripadvisor.com/UserReview-g298342-d13821279-Seasense_Boutique_Hotel_Spa-Belle_Mare.html";
+    } else {
+      // Show thank you modal for ratings below 8
+      document.getElementById('thankYouModal').style.display = 'block';
+    }
+
     form.reset();
     selectedRating = null;
     clearStarClasses();
